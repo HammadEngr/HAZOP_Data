@@ -1,0 +1,346 @@
+ {
+  "pid_name": "Production of Ammonia",
+  "source": "llm_end_to_end",
+  "worksheet": [
+    {
+      "entry_id": "N1-STR-NATGAS-NO-flow",
+      "node_id": "NODE-1",
+      "equipment_ref": null,
+      "stream_ref": "Natural Gas Feed Line",
+      "guide_word": "NO",
+      "parameter": "flow",
+      "deviation_description": "No flow of natural gas feed to Primary Reformer",
+      "causes": [
+        "Upstream supply failure",
+        "Control valve FCV-101 fails closed"
+      ],
+      "consequences": [
+        "Loss of feed to Primary Reformer (R-001) leading to process upset",
+        "Overheating of reformer tubes if heat input from fuel burners is not reduced",
+        "Downstream production shutdown"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "Low-flow alarm",
+        "Low natural gas flow safety interlock to trip fuel gas"
+      ],
+      "recommendations": [
+        "Install a low-flow alarm and an automated safety interlock to trip burner fuel on low natural gas flow"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N1-STR-STEAM-NO-flow",
+      "node_id": "NODE-1",
+      "equipment_ref": null,
+      "stream_ref": "Steam Feed Line",
+      "guide_word": "NO",
+      "parameter": "flow",
+      "deviation_description": "No steam flow to Primary Reformer",
+      "causes": [
+        "Upstream boiler failure",
+        "FCV-101 steam side valve fails closed",
+        "Blockage in the steam line"
+      ],
+      "consequences": [
+        "Rapid catalyst coking (carbon deposition) on R-001 reformer tubes",
+        "Overheating and potential rupture of reformer tubes due to localized hot spots"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Flow measurement and ratio controller RS-104 matching steam and gas flows",
+          "instrumentation_ref": "RS-104"
+        }
+      ],
+      "safeguard_gaps": [
+        "Dedicated steam low-flow trip interlock"
+      ],
+      "recommendations": [
+        "Install a high-integrity low steam flow trip system to cut off feed gas and burner fuel in the event of steam failure"
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-STR-FUEL-MORE-flow",
+      "node_id": "NODE-2",
+      "equipment_ref": null,
+      "stream_ref": "Fuel Gas Feed Line",
+      "guide_word": "MORE",
+      "parameter": "flow",
+      "deviation_description": "Excessive fuel gas flow to R-001 burners",
+      "causes": [
+        "Fuel control valve FCV-103 fails fully open",
+        "Upstream fuel gas header pressure surge"
+      ],
+      "consequences": [
+        "Excessive heat duty in R-001 firebox",
+        "Overheating of reformer tubes leading to mechanical deformation, accelerated creep, or tube rupture"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Flow transmitter and control loop on fuel line",
+          "instrumentation_ref": "FT-111"
+        }
+      ],
+      "safeguard_gaps": [
+        "High fuel gas flow trip",
+        "High tube skin temperature alarm"
+      ],
+      "recommendations": [
+        "Implement a high-pressure/high-flow fuel gas trip interlock to isolate fuel gas on high-high flow",
+        "Ensure tube skin temperature monitoring is active with high-temperature alarms in the DCS"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-STR-AIR-LESS-flow",
+      "node_id": "NODE-2",
+      "equipment_ref": null,
+      "stream_ref": "Combustion Air Feed Line",
+      "guide_word": "LESS",
+      "parameter": "flow",
+      "deviation_description": "Less combustion air flow to burners",
+      "causes": [
+        "Combustion air blower failure",
+        "Control valve FCV-104 fails closed"
+      ],
+      "consequences": [
+        "Incomplete combustion in the furnace, resulting in carbon monoxide generation",
+        "Potential accumulation of unburnt fuel in the firebox, creating an explosion risk upon ignition/re-ignition"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Flow ratio control system",
+          "instrumentation_ref": "RS-113"
+        }
+      ],
+      "safeguard_gaps": [
+        "Combustion air low-flow trip",
+        "Flame safeguard/burner management system"
+      ],
+      "recommendations": [
+        "Install a low air flow alarm and integrate a burner management system (BMS) with flame scanners to safely trip fuel on loss of combustion air"
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N3-EQ-R001-MORE-temperature",
+      "node_id": "NODE-3",
+      "equipment_ref": {
+        "tag": "R-001",
+        "type": "Reformer",
+        "subtype": "Primary Reformer"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "High process temperature in Primary Reformer",
+      "causes": [
+        "Excessive firing of burners",
+        "Low process gas flow (mismatch with heat input)"
+      ],
+      "consequences": [
+        "Thermal stress and cracking of reformer catalyst tubes",
+        "Catastrophic tube rupture leading to process gas fire in the furnace box"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Temperature controller and monitoring loop on reformer outlet",
+          "instrumentation_ref": "TIC-105"
+        }
+      ],
+      "safeguard_gaps": [
+        "Independent high-temperature safety shutdown system"
+      ],
+      "recommendations": [
+        "Install an independent safety-instrumented high temperature trip on the reformer outlet line to isolate fuel"
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N3-EQ-R001-MORE-pressure",
+      "node_id": "NODE-3",
+      "equipment_ref": {
+        "tag": "R-001",
+        "type": "Reformer",
+        "subtype": "Primary Reformer"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "pressure",
+      "deviation_description": "Overpressurization of Primary Reformer tubes",
+      "causes": [
+        "Downstream blockage in secondary reformer R-002 or waste heat boilers",
+        "Excessive steam or feed flow"
+      ],
+      "consequences": [
+        "Overstressing of reformer tubes and piping manifolds, leading to physical damage or rupture"
+      ],
+      "existing_safeguards": [
+        {
+          "description": "Pressure safety relief valve on the outlet header",
+          "instrumentation_ref": "PSV"
+        }
+      ],
+      "safeguard_gaps": [],
+      "recommendations": [
+        "Verify that the PSV is sized for blocked-outlet scenarios and perform regular testing of the relief valve"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N4-EQ-K001-MORE-pressure",
+      "node_id": "NODE-4",
+      "equipment_ref": {
+        "tag": "K-001",
+        "type": "Compressor",
+        "subtype": "Air Compressor"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "pressure",
+      "deviation_description": "High discharge pressure at Air Compressor K-001",
+      "causes": [
+        "Blockage in downstream air line to secondary reformer R-002",
+        "Closed isolation valves on downstream lines"
+      ],
+      "consequences": [
+        "Compressor surge leading to severe vibration and potential damage to internal compressor components (blades, bearings, shaft seals)"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "Anti-surge control system",
+        "High-pressure compressor trip"
+      ],
+      "recommendations": [
+        "Install an automatic anti-surge recycle valve and configure a high-pressure trip in the DCS to protect the compressor from damage"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N4-STR-AIR-NO-flow",
+      "node_id": "NODE-4",
+      "equipment_ref": null,
+      "stream_ref": "Process Air Feed Line",
+      "guide_word": "NO",
+      "parameter": "flow",
+      "deviation_description": "Complete loss of process air flow to R-002",
+      "causes": [
+        "Trip/failure of Air Compressor K-001 turbine driver",
+        "Failure of steam control valve FCV-102 closed",
+        "Downstream line blockage"
+      ],
+      "consequences": [
+        "Loss of secondary reforming reaction in R-002",
+        "Downstream process gas composition upset (lack of nitrogen for ammonia synthesis)",
+        "Potential backflow of flammable process gas from R-002 into the air piping if pressure is lost"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Air flow transmitter and ratio monitoring",
+          "instrumentation_ref": "FT-108"
+        }
+      ],
+      "safeguard_gaps": [
+        "Non-return (check) valve on air line",
+        "Low pressure/flow trip"
+      ],
+      "recommendations": [
+        "Ensure a highly reliable non-return valve (check valve) is installed on the air line to prevent reverse flow of hot syngas",
+        "Implement a low air flow safety trip to isolate the air line and shut down the secondary reformer air feed safely"
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N5-EQ-R002-MORE-temperature",
+      "node_id": "NODE-5",
+      "equipment_ref": {
+        "tag": "R-002",
+        "type": "Reformer",
+        "subtype": "Secondary Reformer"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "Overheating of Secondary Reformer R-002 vessel",
+      "causes": [
+        "Excessive air flow relative to primary reformer syngas feed",
+        "Loss of jacket cooling water level"
+      ],
+      "consequences": [
+        "Thermal damage to internal refractory lining",
+        "Deformation, swelling, or rupture of the high-pressure reformer vessel shell"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Temperature transmitters monitoring interior and shell temperatures",
+          "instrumentation_ref": "TIC-116"
+        },
+        {
+          "description": "Cooling water jacket level control system",
+          "instrumentation_ref": "LIC-120"
+        }
+      ],
+      "safeguard_gaps": [
+        "High-temperature automated shutdown interlock"
+      ],
+      "recommendations": [
+        "Configure an independent safety-instrumented high temperature interlock to trip process air to R-002 on high-high reactor shell or exit temperatures"
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N5-EQ-R002-LESS-level",
+      "node_id": "NODE-5",
+      "equipment_ref": {
+        "tag": "R-002",
+        "type": "Reformer",
+        "subtype": "Secondary Reformer"
+      },
+      "stream_ref": null,
+      "guide_word": "LESS",
+      "parameter": "level",
+      "deviation_description": "Low cooling water level in the jacket of Secondary Reformer R-002",
+      "causes": [
+        "Cooling water supply failure",
+        "LCV-101 fails closed",
+        "Physical leak in cooling jacket"
+      ],
+      "consequences": [
+        "Rapid loss of cooling to the reformer shell leading to overheating, structural steel weakening, and potential shell burst under operating pressure"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Level transmitter and controller",
+          "instrumentation_ref": "LT-121"
+        }
+      ],
+      "safeguard_gaps": [
+        "Low-low jacket level safety interlock"
+      ],
+      "recommendations": [
+        "Install a low-low cooling jacket level trip that initiates safety isolation and depressurization of R-002 to protect the pressure vessel shell"
+      ],
+      "severity": "severe",
+      "rule_source": null
+    }
+  ]
+}

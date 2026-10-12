@@ -1,0 +1,489 @@
+{
+  "pid_name": "Ammonia Production (PG-2)",
+  "source": "llm_end_to_end",
+  "worksheet": [
+    {
+      "entry_id": "N1-E004-MORE-temperature",
+      "node_id": "Node 1: High Temperature Shift Converter System",
+      "equipment_ref": {
+        "tag": "E-104",
+        "type": "Heat Exchanger",
+        "subtype": "Feed/Effluent Cooler"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "High process gas outlet temperature from cooler E-004",
+      "causes": [
+        "Cooling water control valve TCV-201 stuck closed",
+        "Loss of cooling water supply or pressure"
+      ],
+      "consequences": [
+        "High temperature feed entering High Temperature Shift Converter R-003, potentially causing catalyst sintering, thermal runaway, or mechanical overstressing of the reactor.",
+        "Simultaneous freeze-up of the cooling water side of E-004 due to the same valve failure"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Temperature control loop TC-201 / TT-201 controlling TCV-201 on cooling water outlet",
+          "instrumentation_ref": "TCV-201"
+        },
+        {
+          "description": "Independent high-temperature shutdown already installed and interlocked to isolate feed",
+          "instrumentation_ref": "TSH-201"
+        }
+      ],
+      "safeguard_gaps": [
+        "No independent high temperature alarm or automatic shutdown to protect R-003 from high inlet temperature"
+      ],
+      "recommendations": [
+        "Install a high-temperature alarm (TAH) on TT-201 and implement a high-temperature reactor feed trip loop to isolate or bypass feed if temperature limits are exceeded."
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N1-R003-MORE-pressure",
+      "node_id": "Node 1: High Temperature Shift Converter System",
+      "equipment_ref": {
+        "tag": "R-103",
+        "type": "Reactor",
+        "subtype": "High Temp. Shift Converter"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "pressure",
+      "deviation_description": "High pressure in High Temp. Shift Converter R-003",
+      "causes": [
+        "Downstream line blockage or closure of downstream valves",
+        "Excessive upstream feed rate from R-002"
+      ],
+      "consequences": [
+        "Vessel overpressure, risk of physical rupture of R-003 and release of toxic and flammable syngas."
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Pressure safety valve (PSV) on the top outlet of R-003",
+          "instrumentation_ref": "PSV-R003"
+        }
+      ],
+      "safeguard_gaps": [],
+      "recommendations": [],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N1-R003-MORE-temperature",
+      "node_id": "Node 1: High Temperature Shift Converter System",
+      "equipment_ref": {
+        "tag": "R-103",
+        "type": "Reactor",
+        "subtype": "High Temp. Shift Converter"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "Excessive catalyst bed temperature in R-003",
+      "causes": [
+        "Runaway exothermic water-gas shift reaction",
+        "Significantly elevated inlet gas temperature from E-004 failure"
+      ],
+      "consequences": [
+        "Catalyst sintering and permanent activity loss",
+        "Vessel shell overheating beyond design temperature (427\u00b0C)"
+      ],
+      "propagated_from": "N1-E004-MORE-temperature",
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No vessel temperature safety instrumented system (SIS) or interlock"
+      ],
+      "recommendations": [
+        "Install multi-point thermocouple indicators inside R-003 connected to a high-temperature alarm (TAH) and an automated quench gas or emergency shutdown system."
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-E005-MORE-temperature",
+      "node_id": "Node 2: Low Temperature Shift Converter System",
+      "equipment_ref": {
+        "tag": "E-005",
+        "type": "Heat Exchanger",
+        "subtype": "Shell & Tube"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "High outlet temperature on the tube side of E-005",
+      "causes": [
+        "Bypass control valve TCV-202 fails in open position, bypassing too much hot process fluid around the cooling shell side"
+      ],
+      "consequences": [
+        "High temperature feed downstream towards E-006, leading to increased load on E-006 and risk of elevated feed temperature into LT Shift Converter R-004."
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Temperature control loop TT-203 / TC-204 controlling bypass valve TCV-202",
+          "instrumentation_ref": "TCV-202"
+        }
+      ],
+      "safeguard_gaps": [
+        "No high-temperature alert or mechanical stroke limit on bypass valve TCV-202"
+      ],
+      "recommendations": [
+        "Install a mechanical travel stop on TCV-202 to prevent total bypass flow, and configure high-temperature alarms in the DCS."
+      ],
+      "severity": "medium",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-E006-MORE-temperature",
+      "node_id": "Node 2: Low Temperature Shift Converter System",
+      "equipment_ref": {
+        "tag": "E-006",
+        "type": "Heat Exchanger",
+        "subtype": "Cooler"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "High process gas temperature leaving E-006",
+      "causes": [
+        "TCV-203 cooling water valve fails closed",
+        "Failure of cooling water utility loop"
+      ],
+      "consequences": [
+        "Feed entering Low Temperature Shift Converter R-004 exceeds design temp (220\u00b0C), causing rapid, irreversible catalyst degradation of the copper catalyst."
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Temperature control loop TT-205 / TC-206 controlling cooling water valve TCV-203",
+          "instrumentation_ref": "TCV-203"
+        }
+      ],
+      "safeguard_gaps": [
+        "No independent safety trip to isolate R-004 feed on high-temperature"
+      ],
+      "recommendations": [
+        "Implement a high-temperature trip interlock on TT-205 that initiates a safety shutdown (e.g., closing feed isolation valves) if temperature climbs towards 220\u00b0C."
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-R004-MORE-pressure",
+      "node_id": "Node 2: Low Temperature Shift Converter System",
+      "equipment_ref": {
+        "tag": "R-104",
+        "type": "Reactor",
+        "subtype": "Low Temp. Shift Converter"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "pressure",
+      "deviation_description": "High pressure in LT Shift Converter R-004",
+      "causes": [
+        "Downstream blockage in E-007 or V-001 inlet"
+      ],
+      "consequences": [
+        "Overpressure and potential rupture of the vessel shell (design pressure 2332.9 kPa)."
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Pressure safety valve (PSV) on the top inlet line of R-004",
+          "instrumentation_ref": "PSV-R004"
+        }
+      ],
+      "safeguard_gaps": [],
+      "recommendations": [],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N3-V001-MORE-level",
+      "node_id": "Node 3: CO2 Absorption Prep & Separation",
+      "equipment_ref": {
+        "tag": "V-001",
+        "type": "Vessel",
+        "subtype": "Separator / Knockout Drum"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "level",
+      "deviation_description": "High liquid level in Knockout Drum V-001",
+      "causes": [
+        "LCV-201 drain control valve fails closed",
+        "Sudden excessive condensation of water/process fluids"
+      ],
+      "consequences": [
+        "Liquid carryover into the overhead process gas line, leading to flooding, damage, or contamination of downstream CO2 Absorber column C-001."
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Level control loop LT-211 / LC-212 / LCV-201 draining to waste water treatment plant",
+          "instrumentation_ref": "LCV-201"
+        },
+        {
+          "description": "High-high level safety trip already installed and interlocked to isolate upstream feed",
+          "instrumentation_ref": "LAHH-211"
+        }
+      ],
+      "safeguard_gaps": [
+        "No independent high-high level alarm or safety trip to prevent overhead liquid carryover"
+      ],
+      "recommendations": [
+        "Install an independent high-high level alarm (LAHH) and high-level safety interlock to shut off upstream process feed or trip the unit before carryover occurs."
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N3-V001-LESS-level",
+      "node_id": "Node 3: CO2 Absorption Prep & Separation",
+      "equipment_ref": {
+        "tag": "V-001",
+        "type": "Vessel",
+        "subtype": "Separator / Knockout Drum"
+      },
+      "stream_ref": null,
+      "guide_word": "LESS",
+      "parameter": "level",
+      "deviation_description": "Low liquid level leading to vapor blowby in V-001",
+      "causes": [
+        "LCV-201 fails in fully open position"
+      ],
+      "consequences": [
+        "Vapor blowby of high-pressure syngas into the low-pressure Waste Water Treatment Plant system, causing severe overpressure, rupture hazard, or toxic gas release in WWTP."
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Level control loop LT-211 / LC-212 / LCV-201",
+          "instrumentation_ref": "LCV-201"
+        }
+      ],
+      "safeguard_gaps": [
+        "No low-level interlock to isolate drain line on loss of liquid seal"
+      ],
+      "recommendations": [
+        "Install a low-low level alarm (LALL) and automatic shutdown interlock to close LCV-201 or a separate ESD valve on low level."
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N4-C001-MORE-level",
+      "node_id": "Node 4: CO2 Absorber System",
+      "equipment_ref": {
+        "tag": "C-101",
+        "type": "Column",
+        "subtype": "CO2 Absorber"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "level",
+      "deviation_description": "High liquid level at the bottom sump of CO2 Absorber C-001",
+      "causes": [
+        "Bottom level control valve LCV-202 fails closed",
+        "Downstream solvent transfer pump failure"
+      ],
+      "consequences": [
+        "Sump flooding, filling up active tray/packing sections of C-001, resulting in severe solvent carryover to the clean gas overhead line leading to R-005, and amine/absorbent loss."
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Level control loop LT-213 / LC-214 controlling LCV-202",
+          "instrumentation_ref": "LCV-202"
+        }
+      ],
+      "safeguard_gaps": [
+        "No independent high-high level shutdown interlock on the column sump"
+      ],
+      "recommendations": [
+        "Install an independent High-High Level Alarm and Interlock (LAHH) to trip/shut off incoming solvent and feed gas flows."
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N4-C001-LESS-flow-solvent",
+      "node_id": "Node 4: CO2 Absorber System",
+      "equipment_ref": {
+        "tag": "C-101",
+        "type": "Column",
+        "subtype": "CO2 Absorber"
+      },
+      "stream_ref": "Lean Solvent Feed Line (top of C-101)",
+      "guide_word": "LESS",
+      "parameter": "flow",
+      "deviation_description": "Low or completely lost solvent flow to top of C-001",
+      "causes": [
+        "Solvent control valve FCV-201 fails closed",
+        "Upstream solvent circulation pump failure"
+      ],
+      "consequences": [
+        "Inadequate or zero absorption of CO2 from the process gas, leading to high CO2 concentration ('slip') in the overhead product gas flowing to Methanator R-005. High CO2 slip will cause catastrophic temperature runaway in R-005."
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Flow control loop FT-220 / FIC-221 / FCV-201 on solvent feed",
+          "instrumentation_ref": "FCV-201"
+        }
+      ],
+      "safeguard_gaps": [
+        "No emergency automatic trip system linked directly to downstream Methanator safety on low solvent flow"
+      ],
+      "recommendations": [
+        "Install a low flow alarm (FAL) on FIC-221 and initiate a hardwired interlock to isolate gas feed or trip the downstream Methanator reactor if solvent flow drops below a critical safety threshold."
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N5-C002-MORE-pressure",
+      "node_id": "Node 5: CO2 Regenerator System",
+      "equipment_ref": {
+        "tag": "C-002",
+        "type": "Column",
+        "subtype": "CO2 Regenerator"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "pressure",
+      "deviation_description": "High pressure in CO2 Regenerator column C-002",
+      "causes": [
+        "CO2 off-gas control valve FCV-204 fails closed",
+        "Blockage or restriction in the CO2 product vent line"
+      ],
+      "consequences": [
+        "Overpressure of the column C-002, threatening physical damage to column packing, trays, or vessel shell (design pressure 2053.7 kPa).",
+        "Sudden loss of column pressure causing flashing and cavitation of the reboiler circulation pump"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Pressure control loop PT-225 / PIC-224 controlling FCV-204 on overhead line",
+          "instrumentation_ref": "FCV-204"
+        },
+        {
+          "description": "Pressure safety valve (PSV) on C-002 overhead line",
+          "instrumentation_ref": "PSV-C002"
+        }
+      ],
+      "safeguard_gaps": [],
+      "recommendations": [],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N5-C002-MORE-temperature",
+      "node_id": "Node 5: CO2 Regenerator System",
+      "equipment_ref": {
+        "tag": "C-002",
+        "type": "Column",
+        "subtype": "CO2 Regenerator"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "Excessive temperature in the reboiler / bottom of C-002",
+      "causes": [
+        "Heat medium control valve FCV-203 fails open, feeding excessive steam/heat to the reboiler"
+      ],
+      "consequences": [
+        "Thermal degradation of the amine solvent, increasing corrosion rates in the system and loss of absorption efficiency."
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Flow control loop FT-219 / FIC-220 / FCV-203 on heat medium supply",
+          "instrumentation_ref": "FCV-203"
+        },
+        {
+          "description": "High-temperature cut-off already installed on the reboiler heat medium supply",
+          "instrumentation_ref": "TSH-219"
+        }
+      ],
+      "safeguard_gaps": [
+        "No high-temperature cut-off on the reboiler heat supply"
+      ],
+      "recommendations": [
+        "Install a temperature transmitter on C-002 bottom sump with an interlock to shut/trip FCV-203 if temperature exceeds solvent thermal degradation threshold."
+      ],
+      "severity": "medium",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N6-R005-MORE-temperature",
+      "node_id": "Node 6: Methanator System",
+      "equipment_ref": {
+        "tag": "R-105",
+        "type": "Reactor",
+        "subtype": "Methanator"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "Severe thermal runaway inside Methanator R-005",
+      "causes": [
+        "High concentration of CO or CO2 slip in the feed gas (due to C-001 absorption system failure / low solvent flow)"
+      ],
+      "consequences": [
+        "Extreme heat generation due to highly exothermic methanation reaction, resulting in vessel design limit (330\u00b0C) violation, catalyst sintering, and catastrophic reactor shell rupture."
+      ],
+      "propagated_from": "N4-C001-LESS-flow-solvent",
+      "existing_safeguards": [
+        {
+          "description": "Pressure safety valve (PSV) on the inlet of R-005",
+          "instrumentation_ref": "PSV-R005"
+        }
+      ],
+      "safeguard_gaps": [
+        "No automatic safety instrumented system (SIS) to isolate feed gas on high temperature runaway"
+      ],
+      "recommendations": [
+        "Install a high-temperature safety trip system (interlock) with voting logic (e.g. 2oo3 thermocouples) to automatically close a fast-acting isolation valve on the feed gas stream if bed temperature exceeds 330\u00b0C.",
+        "Install a continuous online CO/CO2 analyzer on the feed gas to R-005 to alarm and initiate an early trip."
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N7-K006-LESS-flow",
+      "node_id": "Node 7: Purge Gas Recovery System",
+      "equipment_ref": {
+        "tag": "K-006",
+        "type": "Compressor",
+        "subtype": "Purge Gas Recycle Compressor"
+      },
+      "stream_ref": "Purge Gas Recycle Line",
+      "guide_word": "LESS",
+      "parameter": "flow",
+      "deviation_description": "Reduced purge gas recycle flow from K-006 back to the synthesis loop",
+      "causes": [
+        "Compressor K-006 mechanical trip or seal failure",
+        "Recycle line partial blockage"
+      ],
+      "consequences": [
+        "Buildup of inert gases (methane, argon) in the ammonia synthesis loop, reducing overall conversion efficiency and increasing energy consumption"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No flow monitoring or low-flow alarm on the purge gas recycle line"
+      ],
+      "recommendations": [
+        "Install a flow transmitter and low-flow alarm on the K-006 recycle discharge line"
+      ],
+      "severity": "low",
+      "rule_source": null
+    }
+  ]
+}

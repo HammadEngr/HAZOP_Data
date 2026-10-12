@@ -1,0 +1,293 @@
+ {
+  "pid_name": "Polymerization Reactor without Safety Reliefs",
+  "source": "llm_end_to_end",
+  "worksheet": [
+    {
+      "entry_id": "N1-R1-MORE-pressure",
+      "node_id": "Node-1-Reactor",
+      "equipment_ref": {
+        "tag": "R-1",
+        "type": "Reactor",
+        "subtype": "Polymerization Reactor"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "pressure",
+      "deviation_description": "High pressure in polymerization reactor R-1",
+      "causes": [
+        "Runaway exothermic polymerization reaction generating excessive vapor",
+        "Nitrogen pressure control valve PC failing wide open, exposing the reactor to 100 psig supply",
+        "Blockage or closed valve on the vapor outlet path (V-12 or E-1 tube side blockage)"
+      ],
+      "consequences": [
+        "Overpressurization of R-1 beyond its design limit of 50 psig, leading to catastrophic rupture and toxic/flammable monomer release"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No pressure relief valve (PSV) or rupture disk on the reactor vessel",
+        "No automated high-pressure emergency shutdown system"
+      ],
+      "recommendations": [
+        "[Process Safety] Install a safety relief valve (PSV) or a rupture disk on R-1 sized for runaway reaction and nitrogen regulator fail-open scenarios.",
+        "[Instrumentation & Controls] Install a high-pressure transmitter with an alarm (PAH) and a safety interlock to automatically close the monomer feed valve V-2 and nitrogen valve V-3."
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N1-R1-MORE-temperature",
+      "node_id": "Node-1-Reactor",
+      "equipment_ref": {
+        "tag": "R-1",
+        "type": "Reactor",
+        "subtype": "Polymerization Reactor"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "High temperature in polymerization reactor R-1",
+      "causes": [
+        "Loss of cooling water flow to the reactor internal coil during active polymerization",
+        "Steam valve V-4 failing open or leaking steam into the coil during polymerization",
+        "Runaway exothermic polymerization reaction"
+      ],
+      "consequences": [
+        "Acceleration of reaction rate leading to thermal runaway, excessive vaporization, severe pressure buildup, and potential reactor rupture"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No temperature monitoring, alarms, or automated cooling response systems on R-1"
+      ],
+      "recommendations": [
+        "[Instrumentation & Controls] Install redundant temperature transmitters (TT) on R-1 with high-temperature alarms (TAH) and an automated safety interlock to shut off monomer feed and steam, while opening emergency cooling water."
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N1-STR-MONOMER-MORE-flow",
+      "node_id": "Node-1-Reactor",
+      "equipment_ref": {
+        "tag": "R-1",
+        "type": "Reactor",
+        "subtype": "Polymerization Reactor"
+      },
+      "stream_ref": "Monomer In",
+      "guide_word": "MORE",
+      "parameter": "flow",
+      "deviation_description": "High monomer feed rate to reactor R-1",
+      "causes": [
+        "Upstream pressure spike or manual valve V-2 opened too far by operator error"
+      ],
+      "consequences": [
+        "Excessive concentration of reactant in R-1, leading to a rapid exothermic polymerization rate that exceeds the cooling capacity of the internal coil, causing thermal runaway"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No flow control, flow measurement, or automatic feed shut-off valve on the monomer line"
+      ],
+      "recommendations": [
+        "[Process Engineering] Install a flow control loop (FE/FCV) on the monomer feed line to limit the maximum monomer feed rate, and a high-flow alarm (FAH)."
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N1-STR-N2-MORE-pressure",
+      "node_id": "Node-1-Reactor",
+      "equipment_ref": {
+        "tag": "R-1",
+        "type": "Reactor",
+        "subtype": "Polymerization Reactor"
+      },
+      "stream_ref": "Nitrogen",
+      "guide_word": "MORE",
+      "parameter": "pressure",
+      "deviation_description": "High pressure in nitrogen supply line to R-1",
+      "causes": [
+        "Failure of pressure regulator PC in the wide-open position"
+      ],
+      "consequences": [
+        "100 psig nitrogen pressure applied directly to R-1 (design pressure 50 psig), leading to mechanical failure of the reactor shell"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Pressure regulator PC regulates downstream nitrogen pressure",
+          "instrumentation_ref": "PC"
+        }
+      ],
+      "safeguard_gaps": [
+        "No safety relief valve downstream of PC or on R-1 to handle regulator failure"
+      ],
+      "recommendations": [
+        "[Process Safety] Install a safety relief valve (PSV) on the reactor R-1, and an upstream overpressure protection system on the nitrogen supply line."
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N1-STR-N2-REVERSE-flow",
+      "node_id": "Node-1-Reactor",
+      "equipment_ref": {
+        "tag": "R-1",
+        "type": "Reactor",
+        "subtype": "Polymerization Reactor"
+      },
+      "stream_ref": "Nitrogen",
+      "guide_word": "REVERSE",
+      "parameter": "flow",
+      "deviation_description": "Reverse flow of reactor contents into the nitrogen supply system",
+      "causes": [
+        "Reactor pressure exceeding nitrogen supply pressure (100 psig) during runaway reaction, combined with check valve mechanical failure"
+      ],
+      "consequences": [
+        "Contamination of the facility-wide utility nitrogen network with toxic, flammable, and polymerizing monomer, causing plugging and hazards elsewhere"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Check valve (non-return valve) installed upstream of V-3",
+          "instrumentation_ref": "check valve symbol upstream of V-3"
+        }
+      ],
+      "safeguard_gaps": [
+        "Single check valve is prone to fouling or leakage from polymerizing monomers"
+      ],
+      "recommendations": [
+        "[Process Safety] Install a double block and bleed system with automatic isolation valves that shut when high pressure is detected in R-1."
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N1-STR-CW-COIL-NO-flow",
+      "node_id": "Node-1-Reactor",
+      "equipment_ref": {
+        "tag": "R-1",
+        "type": "Reactor",
+        "subtype": "Polymerization Reactor"
+      },
+      "stream_ref": "Cooling Water In",
+      "guide_word": "NO",
+      "parameter": "flow",
+      "deviation_description": "Complete loss of cooling water flow to reactor internal coil",
+      "causes": [
+        "Utility cooling water system failure, closed manual valve V-6, or physical line blockage"
+      ],
+      "consequences": [
+        "Loss of heat removal during exothermic polymerization, resulting in rapid temperature and pressure rise inside R-1, leading to thermal runaway"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No flow or pressure monitoring on the cooling water inlet stream to detect loss of cooling"
+      ],
+      "recommendations": [
+        "[Instrumentation & Controls] Install a low-flow alarm (FAL) on the cooling water supply line to provide early warning to operations."
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-E1-LESS-flow",
+      "node_id": "Node-2-Condenser-Drum",
+      "equipment_ref": {
+        "tag": "E-1",
+        "type": "Condenser",
+        "subtype": "Shell and Tube Exchanger"
+      },
+      "stream_ref": "Cooling Water",
+      "guide_word": "LESS",
+      "parameter": "flow",
+      "deviation_description": "Low cooling water flow to condenser E-1",
+      "causes": [
+        "Manual valve V-10 or V-11 throttled too much, or utility supply header pressure drop"
+      ],
+      "consequences": [
+        "Reduced condensation capacity in E-1, leading to excessive vapor carryover to D-1 and the vacuum system, potential overpressurization of D-1 (design pressure 50 psig) and organic vapor discharge to vacuum pump"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No cooling water flow monitoring, high-pressure alarm, or high-temperature alarm on the condenser/separator system"
+      ],
+      "recommendations": [
+        "[Instrumentation & Controls] Install a cooling water low-flow alarm (FAL) on the E-1 cooling water supply line."
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-D1-MORE-level",
+      "node_id": "Node-2-Condenser-Drum",
+      "equipment_ref": {
+        "tag": "D-1",
+        "type": "Drum",
+        "subtype": "Separator Drum"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "level",
+      "deviation_description": "High liquid level in separator drum D-1",
+      "causes": [
+        "Failure of level controller LC, pump P-2 mechanical failure, or closed manual valve V-13/V-14"
+      ],
+      "consequences": [
+        "Liquid carryover into the vacuum system via V-15, leading to vacuum pump damage, potential loss of containment, and environmental release"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Level controller (LC) regulating pump P-2 operation",
+          "instrumentation_ref": "LC"
+        }
+      ],
+      "safeguard_gaps": [
+        "No high-level alarm (LAH) or automated high-high level safety trip (LAHH) to isolate the vacuum line"
+      ],
+      "recommendations": [
+        "[Instrumentation & Controls] Install a high-level alarm (LAH) and a safety interlock to automatically shut down monomer feed and isolate vacuum valve V-15 on high-high level in D-1."
+      ],
+      "severity": "medium",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-P2-NO-flow",
+      "node_id": "Node-2-Condenser-Drum",
+      "equipment_ref": {
+        "tag": "P-2",
+        "type": "Pump",
+        "subtype": "Centrifugal Pump"
+      },
+      "stream_ref": "Drum Liquid Outlet",
+      "guide_word": "NO",
+      "parameter": "flow",
+      "deviation_description": "No discharge flow from centrifugal pump P-2",
+      "causes": [
+        "Pump motor electrical failure, loss of prime/cavitation due to low level, or closed manual valve V-14"
+      ],
+      "consequences": [
+        "Inability to transfer liquid out of D-1, causing liquid level to rise, leading to eventual liquid carryover to the vacuum system"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Level controller (LC) on D-1 controls pump operation",
+          "instrumentation_ref": "LC"
+        }
+      ],
+      "safeguard_gaps": [
+        "No low-flow or pump trip alarms"
+      ],
+      "recommendations": [
+        "[Operations] Install a local discharge pressure gauge or low-flow indicator, and establish procedures for manual draining or starting a standby pump if P-2 fails."
+      ],
+      "severity": "medium",
+      "rule_source": null
+    }
+  ]
+}

@@ -1,0 +1,674 @@
+{
+  "nodes": [
+    {
+      "node_id": "N1",
+      "node_name": "Temp Shift Feed Cooler",
+      "equipment": [
+        {
+          "tag": "E-004",
+          "type": "heat_exchanger",
+          "subtype": "cooler",
+          "description": "High temperature shift converter feed cooler",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "inlet_external",
+          "stream_name": "R-002 feed",
+          "fluid": "process gas",
+          "state": "gas",
+          "from_node": "external",
+          "to_node": "N1",
+          "instrumentation": []
+        },
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_internal",
+          "stream_name": "cooled process gas",
+          "fluid": "process gas",
+          "state": "gas",
+          "from_node": "N1",
+          "to_node": "N2",
+          "instrumentation": [
+            {
+              "tag": "TT-201",
+              "type": "temperature_transmitter",
+              "associated_parameter": "temperature"
+            }
+          ]
+        },
+        {
+          "type": "utility_stream",
+          "stream_role": "utility",
+          "stream_name": "cooling water loop",
+          "fluid": "cooling water",
+          "state": "liquid",
+          "from_node": "external_utility",
+          "to_node": "N1",
+          "instrumentation": [
+            {
+              "tag": "TCV-201",
+              "type": "temperature_control_valve",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "TC-201",
+              "type": "temperature_controller",
+              "associated_parameter": "temperature"
+            }
+          ]
+        }
+      ],
+      "node_boundary_rationale": "GENERAL EQUIPMENT BOUNDARY RULE"
+    },
+    {
+      "node_id": "N2",
+      "node_name": "R-003 High Temp Shift Converter",
+      "equipment": [
+        {
+          "tag": "R-003",
+          "type": "reactor",
+          "subtype": "unspecified",
+          "description": "High Temperature Shift Converter Reactor",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_internal",
+          "stream_name": "R-003 outlet gas",
+          "fluid": "shifted process gas",
+          "state": "gas",
+          "from_node": "N2",
+          "to_node": "N3",
+          "instrumentation": []
+        }
+      ],
+      "node_boundary_rationale": "GENERAL EQUIPMENT BOUNDARY RULE"
+    },
+    {
+      "node_id": "N3",
+      "node_name": "E-005 Heat Exchanger (Tube Side)",
+      "equipment": [
+        {
+          "tag": "E-005",
+          "type": "heat_exchanger",
+          "subtype": "unspecified",
+          "description": "E-005 Tube Side Process Gas Cooler",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_internal",
+          "stream_name": "partially cooled gas",
+          "fluid": "process gas",
+          "state": "gas",
+          "from_node": "N3",
+          "to_node": "N4",
+          "instrumentation": []
+        }
+      ],
+      "node_boundary_rationale": "HEAT EXCHANGER SHELL/TUBE RULE"
+    },
+    {
+      "node_id": "N4",
+      "node_name": "E-006 Cooler",
+      "equipment": [
+        {
+          "tag": "E-006",
+          "type": "heat_exchanger",
+          "subtype": "cooler",
+          "description": "Low temp shift converter feed cooler",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_internal",
+          "stream_name": "cooled gas to LT shift",
+          "fluid": "process gas",
+          "state": "gas",
+          "from_node": "N4",
+          "to_node": "N6",
+          "instrumentation": [
+            {
+              "tag": "TT-205",
+              "type": "temperature_transmitter",
+              "associated_parameter": "temperature"
+            }
+          ]
+        },
+        {
+          "type": "utility_stream",
+          "stream_role": "utility",
+          "stream_name": "cooling water loop",
+          "fluid": "cooling water",
+          "state": "liquid",
+          "from_node": "external_utility",
+          "to_node": "N4",
+          "instrumentation": [
+            {
+              "tag": "TCV-203",
+              "type": "temperature_control_valve",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "TC-206",
+              "type": "temperature_controller",
+              "associated_parameter": "temperature"
+            }
+          ]
+        }
+      ],
+      "node_boundary_rationale": "GENERAL EQUIPMENT BOUNDARY RULE"
+    },
+    {
+      "node_id": "N5",
+      "node_name": "E-005 Heat Exchanger (Shell Side)",
+      "equipment": [
+        {
+          "tag": "E-005",
+          "type": "heat_exchanger",
+          "subtype": "unspecified",
+          "description": "E-005 Shell Side Preheater",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "inlet_external",
+          "stream_name": "process feed from V-005",
+          "fluid": "process gas",
+          "state": "gas",
+          "from_node": "external_V-005",
+          "to_node": "N5",
+          "instrumentation": []
+        },
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_external",
+          "stream_name": "preheated gas to R-006",
+          "fluid": "process gas",
+          "state": "gas",
+          "from_node": "N5",
+          "to_node": "external_R-006",
+          "instrumentation": [
+            {
+              "tag": "TT-203",
+              "type": "temperature_transmitter",
+              "associated_parameter": "temperature"
+            },
+            {
+              "tag": "TCV-202",
+              "type": "temperature_control_valve",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "TC-204",
+              "type": "temperature_controller",
+              "associated_parameter": "temperature"
+            }
+          ]
+        }
+      ],
+      "node_boundary_rationale": "HEAT EXCHANGER SHELL/TUBE RULE"
+    },
+    {
+      "node_id": "N6",
+      "node_name": "R-004 Low Temp Shift Converter",
+      "equipment": [
+        {
+          "tag": "R-004",
+          "type": "reactor",
+          "subtype": "unspecified",
+          "description": "Low Temperature Shift Converter Reactor",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_internal",
+          "stream_name": "R-004 outlet gas",
+          "fluid": "shifted process gas",
+          "state": "gas",
+          "from_node": "N6",
+          "to_node": "N7",
+          "instrumentation": []
+        }
+      ],
+      "node_boundary_rationale": "GENERAL EQUIPMENT BOUNDARY RULE"
+    },
+    {
+      "node_id": "N7",
+      "node_name": "E-007 Heat Exchanger (Tube Side)",
+      "equipment": [
+        {
+          "tag": "E-007",
+          "type": "heat_exchanger",
+          "subtype": "unspecified",
+          "description": "E-007 Tube Side Process Gas Cooler",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_internal",
+          "stream_name": "partially cooled LT shift gas",
+          "fluid": "process gas",
+          "state": "gas",
+          "from_node": "N7",
+          "to_node": "N8",
+          "instrumentation": []
+        }
+      ],
+      "node_boundary_rationale": "HEAT EXCHANGER SHELL/TUBE RULE"
+    },
+    {
+      "node_id": "N8",
+      "node_name": "E-008 Cooler",
+      "equipment": [
+        {
+          "tag": "E-008",
+          "type": "heat_exchanger",
+          "subtype": "cooler",
+          "description": "Process gas final cooler",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_internal",
+          "stream_name": "cooled shift effluent to separator",
+          "fluid": "process gas and condensate",
+          "state": "mixed",
+          "from_node": "N8",
+          "to_node": "N9",
+          "instrumentation": [
+            {
+              "tag": "TT-209",
+              "type": "temperature_transmitter",
+              "associated_parameter": "temperature"
+            }
+          ]
+        },
+        {
+          "type": "utility_stream",
+          "stream_role": "utility",
+          "stream_name": "cooling water loop",
+          "fluid": "cooling water",
+          "state": "liquid",
+          "from_node": "external_utility",
+          "to_node": "N8",
+          "instrumentation": [
+            {
+              "tag": "TCV-205",
+              "type": "temperature_control_valve",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "TC-210",
+              "type": "temperature_controller",
+              "associated_parameter": "temperature"
+            }
+          ]
+        }
+      ],
+      "node_boundary_rationale": "GENERAL EQUIPMENT BOUNDARY RULE"
+    },
+    {
+      "node_id": "N9",
+      "node_name": "V-001 Knockout Separator",
+      "equipment": [
+        {
+          "tag": "V-001",
+          "type": "vessel",
+          "subtype": "knockout_drum",
+          "description": "Water Knockout Drum",
+          "instrumentation": [
+            {
+              "tag": "LT-211",
+              "type": "level_transmitter",
+              "associated_parameter": "level"
+            },
+            {
+              "tag": "LC-212",
+              "type": "level_controller",
+              "associated_parameter": "level"
+            }
+          ]
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_internal",
+          "stream_name": "separated gas to absorber",
+          "fluid": "process gas",
+          "state": "gas",
+          "from_node": "N9",
+          "to_node": "N11",
+          "instrumentation": []
+        },
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_external",
+          "stream_name": "waste water blowdown",
+          "fluid": "process water",
+          "state": "liquid",
+          "from_node": "N9",
+          "to_node": "external_wastewater_treatment",
+          "instrumentation": [
+            {
+              "tag": "LCV-201",
+              "type": "level_control_valve",
+              "associated_parameter": "flow"
+            }
+          ]
+        }
+      ],
+      "node_boundary_rationale": "CONDENSATE DRUM RULE"
+    },
+    {
+      "node_id": "N10",
+      "node_name": "E-007 Heat Exchanger (Shell Side)",
+      "equipment": [
+        {
+          "tag": "E-007",
+          "type": "heat_exchanger",
+          "subtype": "unspecified",
+          "description": "E-007 Shell Side Preheater",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "inlet_external",
+          "stream_name": "process feed from K-005",
+          "fluid": "process gas",
+          "state": "gas",
+          "from_node": "external_K-005",
+          "to_node": "N10",
+          "instrumentation": []
+        },
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_external",
+          "stream_name": "preheated gas to E-017",
+          "fluid": "process gas",
+          "state": "gas",
+          "from_node": "N10",
+          "to_node": "external_E-017",
+          "instrumentation": [
+            {
+              "tag": "TT-207",
+              "type": "temperature_transmitter",
+              "associated_parameter": "temperature"
+            },
+            {
+              "tag": "TCV-204",
+              "type": "temperature_control_valve",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "TC-208",
+              "type": "temperature_controller",
+              "associated_parameter": "temperature"
+            }
+          ]
+        }
+      ],
+      "node_boundary_rationale": "HEAT EXCHANGER SHELL/TUBE RULE"
+    },
+    {
+      "node_id": "N11",
+      "node_name": "C-001 CO2 Absorber Column System",
+      "equipment": [
+        {
+          "tag": "C-001",
+          "type": "column",
+          "subtype": "absorber",
+          "description": "CO2 Absorption Column",
+          "instrumentation": [
+            {
+              "tag": "LT-213",
+              "type": "level_transmitter",
+              "associated_parameter": "level"
+            },
+            {
+              "tag": "LIC-214",
+              "type": "level_controller",
+              "associated_parameter": "level"
+            }
+          ]
+        },
+        {
+          "tag": null,
+          "type": "pump",
+          "subtype": "centrifugal",
+          "description": "C-001 Bottoms Pump",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_internal",
+          "stream_name": "rich solvent to C-002",
+          "fluid": "CO2 rich solvent",
+          "state": "liquid",
+          "from_node": "N11",
+          "to_node": "N12",
+          "instrumentation": [
+            {
+              "tag": "LCV-202",
+              "type": "level_control_valve",
+              "associated_parameter": "flow"
+            }
+          ]
+        },
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_external",
+          "stream_name": "sweet gas to E-017",
+          "fluid": "CO2 free process gas",
+          "state": "gas",
+          "from_node": "N11",
+          "to_node": "external_E-017",
+          "instrumentation": [
+            {
+              "tag": "FCV-202",
+              "type": "flow_control_valve",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "FT-217",
+              "type": "flow_transmitter",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "FIC-218",
+              "type": "flow_indicator_controller",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "QT-215",
+              "type": "composition_transmitter",
+              "associated_parameter": "composition"
+            },
+            {
+              "tag": "QC-216",
+              "type": "composition_controller",
+              "associated_parameter": "composition"
+            }
+          ]
+        }
+      ],
+      "node_boundary_rationale": "PUMP RULE"
+    },
+    {
+      "node_id": "N12",
+      "node_name": "C-002 CO2 Stripper Column System",
+      "equipment": [
+        {
+          "tag": "C-002",
+          "type": "column",
+          "subtype": "stripper",
+          "description": "CO2 Stripping Column",
+          "instrumentation": []
+        },
+        {
+          "tag": null,
+          "type": "pump",
+          "subtype": "centrifugal",
+          "description": "C-002 Bottoms Pump",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_internal",
+          "stream_name": "lean solvent recycle",
+          "fluid": "lean solvent",
+          "state": "liquid",
+          "from_node": "N12",
+          "to_node": "N11",
+          "instrumentation": [
+            {
+              "tag": "FCV-201",
+              "type": "flow_control_valve",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "FT-226",
+              "type": "flow_transmitter",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "FIC-226",
+              "type": "flow_indicator_controller",
+              "associated_parameter": "flow"
+            }
+          ]
+        },
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_external",
+          "stream_name": "CO2 overhead product",
+          "fluid": "CO2 gas",
+          "state": "gas",
+          "from_node": "N12",
+          "to_node": "external_CO2_product",
+          "instrumentation": [
+            {
+              "tag": "FCV-204",
+              "type": "flow_control_valve",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "FT-225",
+              "type": "flow_transmitter",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "PIC-224",
+              "type": "pressure_indicator_controller",
+              "associated_parameter": "pressure"
+            }
+          ]
+        }
+      ],
+      "node_boundary_rationale": "PUMP RULE"
+    },
+    {
+      "node_id": "N13",
+      "node_name": "C-002 Reboiler System",
+      "equipment": [
+        {
+          "tag": null,
+          "type": "heat_exchanger",
+          "subtype": "reboiler",
+          "description": "Thermosyphon Reboiler for C-002",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "utility_stream",
+          "stream_role": "utility",
+          "stream_name": "heat medium supply loop",
+          "fluid": "steam or hot fluid",
+          "state": "gas",
+          "from_node": "external_utility",
+          "to_node": "N13",
+          "instrumentation": [
+            {
+              "tag": "FCV-203",
+              "type": "flow_control_valve",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "FT-219",
+              "type": "flow_transmitter",
+              "associated_parameter": "flow"
+            },
+            {
+              "tag": "FIC-220",
+              "type": "flow_indicator_controller",
+              "associated_parameter": "flow"
+            }
+          ]
+        }
+      ],
+      "node_boundary_rationale": "REBOILER RULE"
+    },
+    {
+      "node_id": "N14",
+      "node_name": "R-005 Methanator",
+      "equipment": [
+        {
+          "tag": "R-005",
+          "type": "reactor",
+          "subtype": "unspecified",
+          "description": "Methanator Reactor",
+          "instrumentation": []
+        }
+      ],
+      "connections": [
+        {
+          "type": "process_stream",
+          "stream_role": "inlet_external",
+          "stream_name": "methanator feed from E-017",
+          "fluid": "purified process gas",
+          "state": "gas",
+          "from_node": "external_E-017",
+          "to_node": "N14",
+          "instrumentation": []
+        },
+        {
+          "type": "process_stream",
+          "stream_role": "outlet_external",
+          "stream_name": "methanator effluent to E-010",
+          "fluid": "methanated syngas",
+          "state": "gas",
+          "from_node": "N14",
+          "to_node": "external_E-010",
+          "instrumentation": []
+        }
+      ],
+      "node_boundary_rationale": "GENERAL EQUIPMENT BOUNDARY RULE"
+    }
+  ],
+  "total_nodes": 14
+}

@@ -1,0 +1,551 @@
+{
+  "pid_name": "Distillation System",
+  "source": "llm_end_to_end",
+  "worksheet": [
+    {
+      "entry_id": "N1-PM1-MORE-pressure",
+      "node_id": "Node 1",
+      "equipment_ref": {
+        "tag": "PD Pump",
+        "type": "pump",
+        "subtype": "positive_displacement"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "pressure",
+      "deviation_description": "High discharge pressure in the Crude Methanol PD Pump",
+      "causes": [
+        "Downstream block valve closed",
+        "Line restriction or blockage in preheater"
+      ],
+      "consequences": [
+        "Pump casing failure",
+        "Piping rupture with release of flammable methanol",
+        "Motor burnout"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No pressure relief valve (PSV) on positive displacement pump discharge"
+      ],
+      "recommendations": [
+        "Install a pressure safety valve (PSV) on the discharge of the Crude Methanol PD Pump upstream of any block valve, routed back to the suction line or feed tank"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N1-EX1-MORE-temperature",
+      "node_id": "Node 1",
+      "equipment_ref": {
+        "tag": "Feed Preheater",
+        "type": "heat_exchanger",
+        "subtype": "plate_and_frame"
+      },
+      "stream_ref": "Crude Methanol Stream",
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "High temperature of the feed stream entering the Still",
+      "causes": [
+        "Steam control valve (TC) fails fully open",
+        "Temperature controller TC malfunction",
+        "Backflow of hot tars from the reboiler into the preheater tube bundle"
+      ],
+      "consequences": [
+        "Boiling of methanol feed inside the preheater or feed line",
+        "Overpressurization of the feed piping",
+        "Column thermal upset and vapor flooding"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Temperature Controller (TC) on the preheater outlet controlling the steam valve",
+          "instrumentation_ref": "TIC-204"
+        }
+      ],
+      "safeguard_gaps": [
+        "No independent high-temperature alarm or safety shutdown on preheater outlet"
+      ],
+      "recommendations": [
+        "Install a high-temperature alarm (TAH) and an automated steam shutdown interlock (TSH) on the preheater outlet line"
+      ],
+      "severity": "medium",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N1-EX1-LESS-temperature",
+      "node_id": "Node 1",
+      "equipment_ref": {
+        "tag": "Feed Preheater",
+        "type": "heat_exchanger",
+        "subtype": "plate_and_frame"
+      },
+      "stream_ref": "Crude Methanol Stream",
+      "guide_word": "LESS",
+      "parameter": "temperature",
+      "deviation_description": "Low temperature of the feed stream entering the Still",
+      "causes": [
+        "Steam control valve (TC) fails closed",
+        "Loss of steam supply utility"
+      ],
+      "consequences": [
+        "Subcooled feed entering the distillation column",
+        "Disruption of the column's vapor-liquid equilibrium profile",
+        "Increased load on the reboiler",
+        "Incomplete separation and off-spec product"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Temperature Controller (TC) on the preheater outlet controlling the steam valve",
+          "instrumentation_ref": "TIC-204"
+        }
+      ],
+      "safeguard_gaps": [
+        "No low-temperature alarm on preheater outlet"
+      ],
+      "recommendations": [
+        "Install a low-temperature alarm (TAL) on the feed line to alert operators of steam heating failure"
+      ],
+      "severity": "low",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-ST1-MORE-level",
+      "node_id": "Node 2",
+      "equipment_ref": {
+        "tag": "Fractionator",
+        "type": "distillation_column",
+        "subtype": "tray_or_packed"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "level",
+      "deviation_description": "High liquid level in the Still column bottom",
+      "causes": [
+        "Tars discharge pump (PD Pump) failure",
+        "PIC discharge control valve fails closed",
+        "Excessive feed flow rate",
+        "Insufficient reboiler boil-up rate"
+      ],
+      "consequences": [
+        "Column bottoms liquid carryover into the reboiler vapor return and lower trays",
+        "Flooding of column trays, leading to loss of separation",
+        "Liquid carryover to the overhead condenser",
+        "Immediate rupture of the vacuum ejector nozzle due to hydraulic hammer"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No level instrumentation, alarm, or controller shown on the Still bottoms section"
+      ],
+      "recommendations": [
+        "Install a level transmitter with high-level alarm (LAH) and high-high level shutdown (LAHH) to stop the feed pump"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-ST1-LESS-level",
+      "node_id": "Node 2",
+      "equipment_ref": {
+        "tag": "Fractionator",
+        "type": "distillation_column",
+        "subtype": "tray_or_packed"
+      },
+      "stream_ref": null,
+      "guide_word": "LESS",
+      "parameter": "level",
+      "deviation_description": "Low liquid level in the Still column bottom",
+      "causes": [
+        "Tars discharge pump running at excessive rate",
+        "Loss of feed flow",
+        "Excessive boil-up rate in the reboiler"
+      ],
+      "consequences": [
+        "Dry running of the column bottom",
+        "Cavitation and damage of the Tars discharge pump",
+        "Dry boiling of the reboiler, causing fouling or tube damage"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No level monitoring or low level protection on the Still bottom"
+      ],
+      "recommendations": [
+        "Install a low-level alarm (LAL) and a low-low level trip (LALL) to shut down the Tars discharge pump and reboiler steam"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-ST1-MORE-pressure",
+      "node_id": "Node 2",
+      "equipment_ref": {
+        "tag": "Fractionator",
+        "type": "distillation_column",
+        "subtype": "tray_or_packed"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "pressure",
+      "deviation_description": "High pressure in the distillation column",
+      "causes": [
+        "Cooling water failure to overhead condenser",
+        "Blockage in the column vapor overhead line",
+        "Nitrogen purge gas control valve (HIC) fails open",
+        "Excessive reboiler steam flow"
+      ],
+      "consequences": [
+        "Overpressurization of the column",
+        "Potential physical rupture of the column or auxiliary piping",
+        "Release of toxic and flammable methanol vapor",
+        "Low pressure causes cavitation in the overhead condenser tubes"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Pressure relief valve venting directly to atmosphere at grade level",
+          "instrumentation_ref": "PSV-301"
+        }
+      ],
+      "safeguard_gaps": [
+        "No pressure relief valve (PSV) or pressure transmitter on the column itself"
+      ],
+      "recommendations": [
+        "Install a pressure safety valve (PSV) on the column overhead line, sized for cooling water failure or blocked outlet, routing to a safe location (e.g., flare or scrubber)"
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-REB1-MORE-temperature",
+      "node_id": "Node 2",
+      "equipment_ref": {
+        "tag": "Reboiler",
+        "type": "heat_exchanger",
+        "subtype": "kettle_or_thermosyphon"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "High temperature on the reboiler process side",
+      "causes": [
+        "Reboiler steam control valve fails open",
+        "TIC malfunction on the column control signal"
+      ],
+      "consequences": [
+        "Thermal degradation of bottom product (tars)",
+        "Increased vapor velocity causing column flooding",
+        "Overpressurization of the column"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Temperature Indicator Controller (TIC) on the column controlling the reboiler steam valve",
+          "instrumentation_ref": "TIC"
+        }
+      ],
+      "safeguard_gaps": [
+        "No independent high-temperature alarm or trip on the reboiler"
+      ],
+      "recommendations": [
+        "Install a high-temperature alarm (TAH) on the column bottoms / reboiler return line to alert operators"
+      ],
+      "severity": "medium",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-EJ1-NO-flow",
+      "node_id": "Node 2",
+      "equipment_ref": {
+        "tag": "Vacuum Ejector",
+        "type": "ejector",
+        "subtype": "steam_jet"
+      },
+      "stream_ref": "Motive Steam to Ejector",
+      "guide_word": "NO",
+      "parameter": "flow",
+      "deviation_description": "Loss of motive steam to the column vacuum ejector",
+      "causes": [
+        "Motive steam supply valve closed by operator error",
+        "Upstream steam header depressurized"
+      ],
+      "consequences": [
+        "Loss of column vacuum, causing sudden pressure rise",
+        "Column bottoms temperature drops below freezing point, solidifying the tars"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No low steam pressure alarm on the ejector motive supply"
+      ],
+      "recommendations": [
+        "Install a low-pressure alarm on the ejector motive steam line"
+      ],
+      "severity": "medium",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N3-DRM1-MORE-level",
+      "node_id": "Node 3",
+      "equipment_ref": {
+        "tag": "Drum",
+        "type": "vessel",
+        "subtype": "reflux_drum"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "level",
+      "deviation_description": "High liquid level in the Reflux/Distillate Drum",
+      "causes": [
+        "Methanol pump failure",
+        "Methanol level control valve (LIC) fails closed",
+        "Excessive vapor condensation rate"
+      ],
+      "consequences": [
+        "Drum overfill, liquid carryover into the overhead vent/vacuum system",
+        "Loss of column pressure control",
+        "Potential release of liquid methanol to atmosphere or flare system"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Level Indicator Controller (LIC) on the Drum controlling the Methanol pump or discharge valve",
+          "instrumentation_ref": "LIC"
+        }
+      ],
+      "safeguard_gaps": [
+        "No high level alarm or independent shutdown on the reflux drum"
+      ],
+      "recommendations": [
+        "Install a high-level alarm (LAH) and high-high level alarm (LAHH) to initiate high-level shutdown"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N3-DRM1-LESS-level",
+      "node_id": "Node 3",
+      "equipment_ref": {
+        "tag": "Drum",
+        "type": "vessel",
+        "subtype": "reflux_drum"
+      },
+      "stream_ref": null,
+      "guide_word": "LESS",
+      "parameter": "level",
+      "deviation_description": "Low liquid level in the Reflux/Distillate Drum",
+      "causes": [
+        "LIC control valve fails open",
+        "Methanol pump running at maximum capacity due to control failure",
+        "Loss of overhead vapor condensing"
+      ],
+      "consequences": [
+        "Drum runs dry",
+        "Methanol product pump cavitates and gets damaged",
+        "Loss of liquid reflux seal, causing vapor blow-through to the product storage"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Level Indicator Controller (LIC) on the Drum",
+          "instrumentation_ref": "LIC"
+        }
+      ],
+      "safeguard_gaps": [
+        "No low level alarm or pump trip on low-low level"
+      ],
+      "recommendations": [
+        "Install a low-level alarm (LAL) and a low-low level interlock (LALL) to trip the Methanol product pump"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N3-COND1-NO-flow",
+      "node_id": "Node 3",
+      "equipment_ref": {
+        "tag": "Condenser",
+        "type": "heat_exchanger",
+        "subtype": "condenser"
+      },
+      "stream_ref": "Cooling Water Stream",
+      "guide_word": "NO",
+      "parameter": "flow",
+      "deviation_description": "No cooling water flow to the condenser",
+      "causes": [
+        "Cooling water pump failure",
+        "Utility water supply failure",
+        "Condenser cooling water control valve (TIC) fails closed"
+      ],
+      "consequences": [
+        "Loss of condensation of overhead vapors",
+        "Rapid pressure build-up in the Still and Reflux Drum",
+        "Overpressurization and eventual release or column failure"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Temperature Indicator Controller (TIC) on the overhead line controlling the cooling water valve",
+          "instrumentation_ref": "TIC"
+        },
+        {
+          "description": "Redundant secondary condenser installed in parallel for backup cooling",
+          "instrumentation_ref": "E-205B"
+        }
+      ],
+      "safeguard_gaps": [
+        "No independent cooling water low-flow alarm or high-pressure trip"
+      ],
+      "recommendations": [
+        "Install a low cooling-water flow transmitter with alarm, and a high-pressure trip on the column to shut off reboiler steam upon high column/drum pressure"
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N4-PM2-MORE-pressure",
+      "node_id": "Node 4",
+      "equipment_ref": {
+        "tag": "Tars PD Pump",
+        "type": "pump",
+        "subtype": "positive_displacement"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "pressure",
+      "deviation_description": "High discharge pressure on the Tars PD Pump",
+      "causes": [
+        "Downstream block valve closed",
+        "Discharge PIC control valve fails closed",
+        "Line plugging by highly viscous tar"
+      ],
+      "consequences": [
+        "Severe overpressurization of pump and discharge line",
+        "Piping rupture, leading to release of hot, hazardous tars",
+        "Mechanical failure of the pump"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Pressure Indicator Controller (PIC) controlling the discharge line",
+          "instrumentation_ref": "PIC"
+        }
+      ],
+      "safeguard_gaps": [
+        "No physical pressure safety valve (PSV) on positive displacement pump discharge"
+      ],
+      "recommendations": [
+        "Install a mechanical safety relief valve (PSV) on the Tars PD Pump discharge line upstream of any block or control valve, routed to a safe recovery/vent location"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N4-STR1-REVERSE-flow",
+      "node_id": "Node 4",
+      "equipment_ref": {
+        "tag": "Methanol Pump",
+        "type": "pump",
+        "subtype": "centrifugal_or_other"
+      },
+      "stream_ref": "Methanol Product Stream",
+      "guide_word": "REVERSE",
+      "parameter": "flow",
+      "deviation_description": "Reverse flow of methanol product back into the Drum",
+      "causes": [
+        "Methanol pump stopped while downstream isolation valves remain open",
+        "Higher pressure in downstream methanol storage tank"
+      ],
+      "consequences": [
+        "Backflow of product into the Reflux Drum",
+        "Overfilling of the Reflux Drum with associated risks of liquid carryover and spill",
+        "Potential product contamination"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Check valve rated for full reverse flow already installed and verified during last shutdown",
+          "instrumentation_ref": "CV-410"
+        }
+      ],
+      "safeguard_gaps": [
+        "No check valve (non-return valve) shown on the Methanol product pump discharge line"
+      ],
+      "recommendations": [
+        "Install a check valve on the discharge of the Methanol product pump"
+      ],
+      "severity": "medium",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N2-STR2-MORE-flow",
+      "node_id": "Node 2",
+      "equipment_ref": {
+        "tag": "Fractionator",
+        "type": "distillation_column",
+        "subtype": "tray_or_packed"
+      },
+      "stream_ref": "Nitrogen Purge Gas Line",
+      "guide_word": "MORE",
+      "parameter": "flow",
+      "deviation_description": "Excessive nitrogen purge gas flow to the column",
+      "causes": [
+        "HIC (Hand Indicator Control) valve fails fully open",
+        "Operator error in manual setting"
+      ],
+      "consequences": [
+        "Overpressurization of the column",
+        "Vapor velocity increases, disrupting column distillation efficiency",
+        "High non-condensable gas flow to the condenser, leading to loss of condensation and venting of methanol vapor"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Hand Indicator Controller (HIC) on the nitrogen line",
+          "instrumentation_ref": "HIC"
+        }
+      ],
+      "safeguard_gaps": [
+        "No high pressure shutdown or flow-limiting orifice on the nitrogen purge line"
+      ],
+      "recommendations": [
+        "Install a restrictor orifice on the nitrogen purge line to limit maximum flow, and/or interlock nitrogen flow to isolate on high column pressure"
+      ],
+      "severity": "medium",
+      "rule_source": null
+    },
+    {
+      "entry_id": "N5-COOL1-LESS-flow",
+      "node_id": "Node 5",
+      "equipment_ref": {
+        "tag": "Product Trim Cooler",
+        "type": "heat_exchanger",
+        "subtype": "air_cooled"
+      },
+      "stream_ref": "Methanol Product Stream",
+      "guide_word": "LESS",
+      "parameter": "flow",
+      "deviation_description": "Reduced airflow across the product trim cooler fins",
+      "causes": [
+        "Cooler fan motor failure",
+        "Fin fouling from ambient dust"
+      ],
+      "consequences": [
+        "Product leaves the unit above tank storage temperature limits",
+        "Increased vapor generation in the downstream storage tank, causing tank breather valve to lift continuously"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No outlet temperature alarm on the trim cooler"
+      ],
+      "recommendations": [
+        "Install a high-temperature alarm on the trim cooler outlet and a fan-fail alarm on the motor starter"
+      ],
+      "severity": "low",
+      "rule_source": null
+    }
+  ]
+}

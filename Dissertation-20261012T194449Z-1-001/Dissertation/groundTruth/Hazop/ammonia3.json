@@ -1,0 +1,286 @@
+ {
+  "pid_name": "Ammonia Production",
+  "source": "llm_end_to_end",
+  "worksheet": [
+    {
+      "entry_id": "V-002-MORE-level",
+      "node_id": "NODE-1",
+      "equipment_ref": {
+        "tag": "V-002",
+        "type": "vessel",
+        "subtype": "separator"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "level",
+      "deviation_description": "High liquid level in Knock-out Drum V-002",
+      "causes": [
+        "Level control valve LCV-301 fails closed",
+        "Manual bypass or block valve downstream of LCV-301 accidentally closed",
+        "Excessive liquid condensation rate in upstream process"
+      ],
+      "consequences": [
+        "Liquid carryover into the suction of Syngas Compressor Stage 1 K-002",
+        "Severe mechanical damage to K-002 impellers/pistons due to liquid slugging"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Level transmitter, controller, and control valve loop",
+          "instrumentation_ref": "LIC-308 / LCV-301"
+        }
+      ],
+      "safeguard_gaps": [
+        "No independent high-high level alarm or trip to shut down the compressor before liquid carryover occurs"
+      ],
+      "recommendations": [
+        "Install an independent high-high level alarm (LAHH) and an interlock (LSHH) on V-002 to trip K-002 compressor or close a suction shutdown valve"
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "V-002-LESS-level",
+      "node_id": "NODE-1",
+      "equipment_ref": {
+        "tag": "V-002",
+        "type": "vessel",
+        "subtype": "separator"
+      },
+      "stream_ref": null,
+      "guide_word": "LESS",
+      "parameter": "level",
+      "deviation_description": "Low liquid level in Knock-out Drum V-002",
+      "causes": [
+        "Level control valve LCV-301 fails open",
+        "Under-production of liquid condensate"
+      ],
+      "consequences": [
+        "Gas blowby through the liquid outlet line to the waste water treatment plant",
+        "Potential overpressurization and hazardous gas release at the downstream waste water treatment facilities"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Level transmitter, controller, and control valve loop",
+          "instrumentation_ref": "LIC-308 / LCV-301"
+        }
+      ],
+      "safeguard_gaps": [
+        "No independent low-level isolation or low-level alarm"
+      ],
+      "recommendations": [
+        "Install a low-level alarm (LAL) and low-level trip (LSLL) to automatically close LCV-301 and prevent gas blowby"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "K-002-DISCHARGE-MORE-pressure",
+      "node_id": "NODE-1",
+      "equipment_ref": {
+        "tag": "K-002",
+        "type": "compressor",
+        "subtype": "syngas compressor stage 1"
+      },
+      "stream_ref": "K-002 Discharge Line to E-011",
+      "guide_word": "MORE",
+      "parameter": "pressure",
+      "deviation_description": "High pressure on K-002 discharge line",
+      "causes": [
+        "Blockage in downstream piping or closed manual valves",
+        "Fouling or blockage inside the interstage cooler E-011",
+        "Surge or over-speed of the steam turbine driver"
+      ],
+      "consequences": [
+        "Overpressurization of the discharge piping and E-011 shell/tubes",
+        "Potential mechanical failure or line rupture leading to release of toxic and flammable syngas"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No discharge safety relief valve (PSV) or high-pressure trip shown on this discharge segment"
+      ],
+      "recommendations": [
+        "Install a pressure safety valve (PSV) on the K-002 discharge line upstream of any isolation valves, sized for full compressor blocked outlet case",
+        "Install a high-pressure trip (PSHH) to shut down steam turbine control valve PCV-301"
+      ],
+      "severity": "high",
+      "rule_source": null
+    },
+    {
+      "entry_id": "E-011-OUTLET-MORE-temperature",
+      "node_id": "NODE-1",
+      "equipment_ref": {
+        "tag": "E-011",
+        "type": "heat exchanger",
+        "subtype": "interstage cooler"
+      },
+      "stream_ref": "E-011 Process Outlet Line to V-003",
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "High process temperature at E-011 outlet",
+      "causes": [
+        "Cooling water control valve TCV-303 fails closed",
+        "Loss of cooling water utility flow or high cooling water supply temperature"
+      ],
+      "consequences": [
+        "High-temperature syngas fed into V-003 and Stage 2 Compressor K-003 suction",
+        "Increased suction temperature to K-003 leads to overheating of compressor components and loss of gas density/efficiency"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Temperature controller and valve on cooling water line",
+          "instrumentation_ref": "TIC-310 / TCV-303"
+        }
+      ],
+      "safeguard_gaps": [
+        "No high-temperature alarm or trip to protect the downstream compressor K-003"
+      ],
+      "recommendations": [
+        "Install a high-temperature alarm (TAH) on the E-011 process outlet line to alert operations before compressor limits are breached"
+      ],
+      "severity": "medium",
+      "rule_source": null
+    },
+    {
+      "entry_id": "R-006-MORE-temperature",
+      "node_id": "NODE-2",
+      "equipment_ref": {
+        "tag": "R-006",
+        "type": "reactor",
+        "subtype": "ammonia converter"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "temperature",
+      "deviation_description": "Thermal runaway / High temperature in Ammonia Converter R-006",
+      "causes": [
+        "Loss of cooling gas/quench control due to TCV-306, TCV-307, or TCV-308 failing closed",
+        "Excessive reactant concentration or feed temperature from feed preheaters"
+      ],
+      "consequences": [
+        "Rapid catalyst deactivation",
+        "Exceeding vessel design temperature leading to structural failure/rupture of the high-pressure reactor, causing catastrophic release of toxic ammonia and flammable hydrogen"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Temperature indicators and control loop valves for beds",
+          "instrumentation_ref": "TIC-339 / TCV-306, TIC-340 / TCV-307, TIC-341 / TCV-308"
+        },
+        {
+          "description": "Pressure safety valve installed on the reactor head",
+          "instrumentation_ref": "PSV-R-006"
+        }
+      ],
+      "safeguard_gaps": [
+        "Lack of emergency automatic quench shutdown system (SIS) to mitigate runaway reactions"
+      ],
+      "recommendations": [
+        "Install a safety-instrumented system (SIS) with emergency depressurization (blowdown) and feed isolation valves triggered by reactor high-high bed temperatures"
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "R-006-FEED-LESS-flow",
+      "node_id": "NODE-2",
+      "equipment_ref": {
+        "tag": "R-006",
+        "type": "reactor",
+        "subtype": "ammonia converter"
+      },
+      "stream_ref": "Feed Syngas to R-006",
+      "guide_word": "LESS",
+      "parameter": "flow",
+      "deviation_description": "Reduced feed flow rate to Ammonia Converter R-006",
+      "causes": [
+        "Upstream compressor K-004 trip or speed reduction",
+        "Control valve failure upstream or block valve inadvertently closed"
+      ],
+      "consequences": [
+        "Loss of reactor production",
+        "Potential upset in downstream heat recovery exchangers (E-014, E-015, E-016) leading to thermal shock and piping stresses"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No low-flow warning or automatic compressor/heater interlocks on reactor feed line"
+      ],
+      "recommendations": [
+        "Install a flow transmitter (FT) on the reactor inlet line with low-flow alarm (FAL) to initiate orderly system turnaround or standby mode"
+      ],
+      "severity": "medium",
+      "rule_source": null
+    },
+    {
+      "entry_id": "V-006-MORE-level",
+      "node_id": "NODE-3",
+      "equipment_ref": {
+        "tag": "V-006",
+        "type": "vessel",
+        "subtype": "ammonia separator"
+      },
+      "stream_ref": null,
+      "guide_word": "MORE",
+      "parameter": "level",
+      "deviation_description": "High liquid ammonia level in Ammonia Separator V-006",
+      "causes": [
+        "Level control valve LCV-305 fails closed",
+        "Discharge line block valve closed or downstream piping to T-001 blocked",
+        "Sudden increase in liquid condensation/production rate"
+      ],
+      "consequences": [
+        "Liquid ammonia carryover into the recycle compressor K-005 suction line",
+        "Severe liquid slugging and mechanical damage to K-005, risking compressor seal blow and ammonia release"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [
+        {
+          "description": "Level transmitter and controller loop",
+          "instrumentation_ref": "LIC-324 / LCV-305"
+        }
+      ],
+      "safeguard_gaps": [
+        "No independent high-high level trip to safeguard K-005"
+      ],
+      "recommendations": [
+        "Install an independent high-high level alarm (LAHH) and emergency shutdown switch (LSHH) on V-006 configured to trip the recycle compressor K-005"
+      ],
+      "severity": "severe",
+      "rule_source": null
+    },
+    {
+      "entry_id": "K-005-DISCHARGE-REVERSE-flow",
+      "node_id": "NODE-3",
+      "equipment_ref": {
+        "tag": "K-005",
+        "type": "compressor",
+        "subtype": "recycle compressor"
+      },
+      "stream_ref": "K-005 Discharge Line",
+      "guide_word": "REVERSE",
+      "parameter": "flow",
+      "deviation_description": "Reverse gas flow through Recycle Compressor K-005",
+      "causes": [
+        "Trip of compressor K-005 while downstream systems are fully pressurized and isolation valves remain open"
+      ],
+      "consequences": [
+        "High-pressure downstream gas flows backwards through K-005, causing backwards rotation",
+        "Catastrophic mechanical/bearing failure of K-005 and potential external release of pressurized, toxic syngas/ammonia mixture"
+      ],
+      "propagated_from": null,
+      "existing_safeguards": [],
+      "safeguard_gaps": [
+        "No check valve shown on the immediate discharge line of K-005 in this segment"
+      ],
+      "recommendations": [
+        "Install a high-reliability non-return (check) valve on the discharge of compressor K-005 to prevent backflow upon trip"
+      ],
+      "severity": "high",
+      "rule_source": null
+    }
+  ]
+}
